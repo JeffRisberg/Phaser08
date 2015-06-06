@@ -132,20 +132,12 @@ define(['extensions/Monster', 'extensions/Generator', 'extensions/Tower'],
 
             // add a generator at the mouse position
             addOneGenerator: function (sprite, pointer) {
-                var xTile, yTile;
+                var x = sprite.x + this.game.tileSize / 2;
+                var y = sprite.y + this.game.tileSize / 2;
 
-                if (sprite != null) {
-                    var x = sprite.x + this.game.tileSize / 2;
-                    var y = sprite.y + this.game.tileSize / 2;
+                var xTile = Math.round(x / this.game.tileSize);
+                var yTile = Math.round(y / this.game.tileSize);
 
-                    xTile = Math.round(x / this.game.tileSize);
-                    yTile = Math.round(y / this.game.tileSize);
-                }
-                else {
-                    var pathLength = this.game.tilePath.length;
-                    xTile = this.game.tilePath[pathLength - 1].x;
-                    yTile = this.game.tilePath[pathLength - 1].y;
-                }
                 var generator = generators.getFirstDead();
 
                 if (generator === null) {
