@@ -2,6 +2,9 @@ define(['Phaser'], function (Phaser) {
     'use strict';
 
     var Generator = function (game, xTile, yTile, frame) { // Extends Phaser.Sprite
+        this.xTile = xTile;
+        this.yTile = yTile;
+
         Phaser.Sprite.call(this, game, xTile * game.tileSize - 1, yTile * game.tileSize, 'generator', frame);
 
         this.scale.setTo(1.0, 1.0);

@@ -46,7 +46,7 @@ define(['Phaser', 'extensions/Monster'], function (Phaser, Monster) {
 
             if (targets.length > 0) {
                 var sources = [];
-                var supplyLimit = 3;
+                var supplyLimit = 5;
 
                 generators.forEach(function (generator) {
                     if (generator.alive) {
@@ -60,7 +60,9 @@ define(['Phaser', 'extensions/Monster'], function (Phaser, Monster) {
                 var damage = tower.damage;
 
                 if (sources.length > 0) {
-                    damage *= (sources.length - 1);
+                    var multiplier = sources.length -1;
+                    console.log(multiplier);
+                    damage *= multiplier;
                 }
 
                 tower.laserBeam.lineStyle(5, 0xFF0000);
