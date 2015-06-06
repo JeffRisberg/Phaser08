@@ -27,7 +27,7 @@ define(['Phaser', 'extensions/Monster'], function (Phaser, Monster) {
     Tower.prototype = Object.create(Phaser.Sprite.prototype);
     Tower.prototype.constructor = Tower;
 
-    Tower.prototype.attack = function (tower, monsters) {
+    Tower.prototype.attack = function (tower, generators, monsters) {
         if (tower.game.time.now > tower.clearLaserTime) {
             tower.laserBeam.clear();
             tower.clearLaserTime = tower.game.time.now + 10000;
@@ -43,13 +43,31 @@ define(['Phaser', 'extensions/Monster'], function (Phaser, Monster) {
                     }
                 }
             });
+
             if (targets.length > 0) {
+                var sources = [];
+                var supplyLimit = 3;
+
+                generators.forEach(function (generator) {
+                    if (generator.alive) {
+                        if (Math.abs(generator.yTile - tower.yTile) <= supplyLimit &&
+                            Math.abs(generator.xTile - tower.xTile) <= supplyLimit) {
+                            sources.push(generator);
+                        }
+                    }
+                });
+
+                var damage = tower.damage;
+
+                if (sources.length > 0) {
+                    damage *= (sources.length - 1);
+                }
+
                 tower.laserBeam.lineStyle(5, 0xFF0000);
                 tower.laserBeam.moveTo(tower.x, tower.y - tower.height / 2 + 10);
                 tower.laserBeam.lineTo(targets[0].x, targets[0].y);
 
-                Monster.prototype.damageTaken(targets[0], tower.damage);
-                //Tower.prototype.fire(tower, targets[0]);
+                Monster.prototype.damageTaken(targets[0], damage);
             }
             tower.clearLaserTime = tower.game.time.now + 40;
             tower.nextShotTime = tower.game.time.now + tower.fireRate;
@@ -57,7 +75,6 @@ define(['Phaser', 'extensions/Monster'], function (Phaser, Monster) {
     };
 
     Tower.prototype.fire = function (tower, monster) {
-        //new Bullet(tower.x, tower.y, monster.x, monster.y, tower.bulletSpeed, tower.damage, tower, tower.bulletSprite);
     };
 
     Tower.prototype.damageTaken = function (tower, damage) {

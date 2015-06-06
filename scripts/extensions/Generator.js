@@ -10,6 +10,8 @@ define(['Phaser'], function (Phaser) {
         this.game.physics.arcade.enableBody(this);
 
         this.body.allowGravity = false;
+
+        this.tile = -1;
     };
 
     Generator.prototype = Object.create(Phaser.Sprite.prototype);

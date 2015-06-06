@@ -53,8 +53,8 @@ define(['extensions/Monster', 'extensions/Generator', 'extensions/Tower'],
                 towers.enableBody = true;
                 this.game.physics.enable(towers, Phaser.Physics.ARCADE);
 
-                var style1 = { font: "11px Arial", fill: "#FFFFFF", align: "center" };
-                var style2 = { font: "16px Arial", fill: "#FFFFFF", align: "center" };
+                var style1 = {font: "11px Arial", fill: "#FFFFFF", align: "center"};
+                var style2 = {font: "16px Arial", fill: "#FFFFFF", align: "center"};
 
                 // Create tool for making Generators
                 this.game.add.sprite(this.game.width - 200, this.game.height - 150, 'generator');
@@ -79,10 +79,18 @@ define(['extensions/Monster', 'extensions/Generator', 'extensions/Tower'],
                 this.game.add.text(this.game.width - 120, this.game.height - 230, text, style2);
 
                 var text = "Cash available: $" + game.money;
-                this.game.moneyText = this.game.add.text(this.game.width - 220, 50, text, { font: "14px Arial", fill: "#FFFFFF", align: "left" });
+                this.game.moneyText = this.game.add.text(this.game.width - 220, 50, text, {
+                    font: "14px Arial",
+                    fill: "#FFFFFF",
+                    align: "left"
+                });
 
                 text = "Score: " + game.score;
-                this.game.scoreText = this.game.add.text(this.game.width - 220, 100, text, { font: "14px Arial", fill: "#FFFFFF", align: "left" });
+                this.game.scoreText = this.game.add.text(this.game.width - 220, 100, text, {
+                    font: "14px Arial",
+                    fill: "#FFFFFF",
+                    align: "left"
+                });
 
                 var freq = 4500;
                 timers['monster'] = this.game.time.events.loop(freq, this.addOneMonster, this);
@@ -105,10 +113,10 @@ define(['extensions/Monster', 'extensions/Generator', 'extensions/Tower'],
                     });
 
                     towers.forEach(function (tower) {
-                        Tower.prototype.attack(tower, monsters);
+                        Tower.prototype.attack(tower, generators, monsters);
                     });
 
-                    // See if any monster has reach generator
+                    // See if any monster has reached a generator
                     monsters.forEach(function (monster) {
                             var monsterX = monster.x;
                             var monsterY = monster.y;
@@ -119,7 +127,7 @@ define(['extensions/Monster', 'extensions/Generator', 'extensions/Tower'],
                                     var generatorY = generator.y;
 
                                     if (Math.abs(monsterX - generatorX) < 32 && Math.abs(monsterY - generatorY) < 32) {
-                                        var gameOverText = me.game.add.text(me.game.world.width / 2, me.game.world.height / 2, "Sorry, Game Over", { font: "50px Arial"});
+                                        var gameOverText = me.game.add.text(me.game.world.width / 2, me.game.world.height / 2, "Sorry, Game Over", {font: "50px Arial"});
                                         gameOverText.anchor.set(0.5);
                                         gameover = true;
                                     }
